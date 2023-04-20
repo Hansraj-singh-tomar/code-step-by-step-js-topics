@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call, Apply And Bind Method</title>
+</head>
+<body>
+    <h1>Call, Apply and Bind Method</h1>
+    <script>
+        // By RoadSide Coder
+        // 1.
+        // var status = "outer";
+        // setTimeout(() => {
+        //     let status = "inner";
+
+        //     const data = {
+        //         status : "deep inner",
+        //         getStatus(){
+        //             return this.status;
+        //         },
+        //     };
+
+        //     console.log(data.getStatus()); // deep inner
+        //     console.log(data.getStatus.call(this)); // outer
+        // }, 0);
+
+        // 2. 
+        // const animals = [
+        //     {species: "Lion", name: "king"},
+        //     {species: "Whale", name: "Queen"},
+        // ];
+
+        // function printAnimals(i) {
+        //     this.print = function() {
+        //         console.log("#" + i + " " + this.species + ":" + this.name);
+        //     };
+        //     this.print();
+        // }
+        // printAnimals.call(animals); // #undefined undefined:undefined
+        
+        // for(let i = 0; i < animals.length; i++){
+        //     const element = animals[i];
+        //     printAnimals.call(element, i); // #0 Lion:king // #1 Whale:Queen
+        // }
+
+        // 3. Append an array to another array 
+        
+        // 3.1
+        // const array = ["a", "b"];
+        // const elements = [1,2,3];
+
+        // let newArray = array.concat(elements);
+        // console.log(newArray); // (5) ['a', 'b', 1, 2, 3]
+
+        // 3.2
+        // const array = ["a", "b"];
+        // const elements = [1,2,3];
+        
+        // array.push(elements);
+        // console.log(array); // (3) ['a', 'b', Array(3)]
+
+        // for(let i = 0; i < elements.length; i++){
+        //     array.push(elements[i])
+        // }
+        // console.log(array);  // (5) ['a', 'b', 1, 2, 3]
+
+        // array.push.apply(array, elements);
+        // console.log(array);  // (5) ['a', 'b', 1, 2, 3]
+
+        // 4.
+        // let numbers = [2,3,4,5];
+        // console.log(Math.max(numbers)); // NaN
+        // console.log(Math.max.apply(null, numbers)) // 5
+
+        // 5.
+        // function f(){
+        //     console.log(this);
+        // }
+
+        // let user = {
+        //     g: f.bind(null),
+        // }
+        // user.g(); // window {...} 
+
+        // 6. chaining doesn't exist
+        // function f(){
+        //     console.log(this.name);
+        // }
+
+        // f = f.bind({name: "hansraj"}).bind({name: "tomar"});
+        // f(); // hansraj
+
+        // 7. Fix the line 22 to make code work properly
+        // function checkPassword(success, failed) {
+        //     let password = prompt("Password?", "");
+        //     if(password == "Hansraj Singh Tomar") success();
+        //     else failed();
+        // }
+
+        // let user = {
+        //     name: "hansraj singh tomar",
+
+        //     loginSuccessful(){
+        //         console.log(`${this.name} logged in`);
+        //     },
+
+        //     loginFailed(){
+        //         console.log(`${this.name} failed to log in`);
+        //     },
+        // };
+        // checkPassword(user.loginSuccessful.bind(user), user.loginFailed.bind(user));
+
+        // 8.
+        // function checkPassword(ok, fail) {
+        //     let password = prompt("Password?", "");
+        //     if(password == "Hansraj Singh Tomar") ok();
+        //     else fail();
+        // }
+
+        // let user = {
+        //     name: "hansraj singh tomar",
+        //     login(result){
+        //         console.log(this.name + (result ? "login successful" : "login failed"));
+        //     },
+        // }
+        // checkPassword(user.login.bind(user, true), user.login.bind(user, false));
+
+        // 9. case of Arrow Function for call,aplly and bind method
+        // const age = 10;
+
+        // var person = {
+        //     name: "hansraj singh tomar",
+        //     age: 25,
+        //     getAgeArrow: () => console.log(this.age), // here this is going to point window object
+        //     getAge: function(){
+        //         console.log(this.age);
+        //     },
+        // }
+        // var person2 = { age: 23};
+        // person.getAgeArrow.call(person2); // undefined
+        // person.getAge.call(person2); // 23
+
+        // 10. Pollyfill for call,apply and bind
+        let car1 = {
+            color: "Red",
+            company: "Ferrari",
+        };
+
+        function purchaseCar(currency, price){
+            console.log(`I have Purchase ${this.color} - ${this.company} car for ${currency} ${price}`);
+        }
+        // purchaseCar.call(car1, "$", 200000000);
+
+        // Pollyfill for Call Method
+        // context = car1
+        Function.prototype.myCall = function(context = {}, ...args){
+            if(typeof this !== "function"){
+                throw new Error(this + "It's not callable");
+            }
+            // console.log(this); // this = purchaseCar() function
+            context.fn = this;
+            context.fn(...args);
+        }
+        purchaseCar.myCall(car1, "'$", 2000000);
+        
+        
+        // Pollyfill for Apply Method
+        Function.prototype.myApply = function(context = {}, args = []){
+            if(typeof this !== "function"){
+                throw new Error(this + "It's not callable");
+            }
+            if(!Array.isArray(args)){
+                throw new TypeError("createListFromArrayLike called on non-objects");
+            }
+            context.fn = this;
+            context.fn(...args);
+        }
+        purchaseCar.myApply(car1, ["$", 2000000]);
+
+        // Pollyfill for bind method
+    
+        // let newFunc = purchaseCar.bind(car1, "$");
+        // console.log(newFunc(20000000));
+
+        Function.prototype.myBind = function(context = {}, ...args){
+            if(typeof this !== "function"){
+                throw new Error(this + "cannot be bound as it's not callable");
+            }
+            
+            context.fn = this;
+            return function(...newArgs) {
+                return context.fn(...args, ...newArgs);
+            };
+        }
+        // let newFunc = purchaseCar.myBind(car1, "$", 2000000);
+        // console.log(newFunc());
+        let newFunc = purchaseCar.myBind(car1);
+        console.log(newFunc("$", 20000000));
+
+
+        // logical Question
+        // const input = [2,7,11,4,-2];
+        // const output = [20, 15, 11, 18, 24];
+        // let temp = [];
+        // let result = input.reduce((acc, item) => {
+        //     return acc + item;
+        // }, 0)
+        // console.log(result);
+
+        // for(let i = 0 ;i < input.length; i++){
+        //     temp.push(result - input[i])
+        // }
+        // console.log(temp);
+
+
+    
+
+
+
+
+    </script>
+</body>
+</html>

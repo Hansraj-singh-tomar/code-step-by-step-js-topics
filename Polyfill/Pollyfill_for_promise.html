@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollyfill for promise</title>
+</head>
+<body>
+    <h1>Pollyfill for Promise</h1>
+    <script>
+
+    // By Roadside Coder
+
+        // pollyfill of Promise - instead of promise keyword we will use our own Promise which is  PromisePolyFill 
+
+
+        // Here Executor =>  
+                        // (resolve, reject) => {
+                        //     setTimeout(() => {
+                        //         resolve(1);
+                        //     }, 1000)
+                        // }
+        function PromisePolyFill(executor) {
+            let onResolve, onReject, isFullfilled = false, isRejected = false, isCalled = false, value;
+
+            function resolve(val){
+                isFullfilled = true;
+                value = val;
+                if(typeof onResolve === 'function'){
+                    onResolve(val);
+                    isCalled = true;
+                }
+            }
+
+            function reject(val){
+                isRejected = true;
+                value = val;
+                if(typeof onReject === 'function'){
+                    onReject(val);
+                    isCalled = true;
+                }
+            }
+
+            this.then = function (callback) {
+                // console.log(this);  // PromisePolyFill {then: ƒ, catch: ƒ}
+                // console.log(callback);  // (res) => console.log(res); 
+                onResolve = callback;
+
+                if(isFullfilled && !isCalled) {
+                    isCalled = true;
+                    onResolve(value)
+                }
+
+                return this;
+            }
+
+            this.catch = function (callback) {
+                onReject = callback;
+
+                if(isRejected && !isCalled) {
+                    isCalled = true;
+                    onReject(value);
+                }
+
+                return this;
+            }
+
+            try {
+                executor(resolve, reject)
+            } catch (error) {
+                reject(error);
+            }
+        }
+        
+
+        // const examplePromise = new Promise((resolve, reject) => {
+        const examplePromise = new PromisePolyFill((resolve, reject) => {
+            // setTimeout(() => {
+            //     resolve(2);
+            // }, 1000)
+            resolve(10);
+        })
+        examplePromise
+            .then((res) => {
+                console.log(res);  // 2
+            })
+            .catch((err) => console.log(err))
+
+        // case - 1 (async) => isme ham setTimeout ke andar se resolve() method ko call karte hai 
+            // step - 1 => async hane ke karna ham sabse pehle this.then vale part me jate hai 
+            // step - 2 => isme ham onResolve = callback kar dete hai jissse onResolve ek function type ka ho jata hai
+            // step - 3 => if condition me me check karte hai isFullfilled = false and isCalled = true hone par hi ham condition ke andar ghus sakte hai 
+            // step - 4 => ham condition ke andar ghus nhi pate hai to ham return this kar dete hai
+            // step - 5 => after returing this we move to executor part and we call resolve 
+            // step - 6 => where averthing is pefect so we get 2 as a output.    
+
+        // case - 2 (sync) => isme ham setTimeout ka use nhi karte hai, direct resolve() ko call kar dete hai 
+            // step - 1 => isme ham direct PromisePolyFill function ke andar executor ke through resolve function ko call kar dete hai 
+            // step - 2 => resolve function me ham isFullfilled = true and value = val kar dete hai 
+            // then ham if conditon me check karte hai ki typeof onResolve = function hai ya nhi jo ki nhi hai 
+            // then ham uss function se bahar aa jate hai 
+            // then ham this.then vale part me aa jate hai but yha hamari isFullfilled ki value true hai and isCalled ki value false hai 
+            // jis vajah se ham if condition ke andar ghus jate hai and isCalled ko true kar dete hai and onResolve ko ab as function call kar ke value ko as a argument me pass kar dete hai 
+            // then hame as a output (res) => console.log(res) yani ki resolve(value = 2){ console.log(value) } 
+            /// then console me hame 2 as a output mil jayega.   
+        
+        
+    </script>
+</body>
+</html>

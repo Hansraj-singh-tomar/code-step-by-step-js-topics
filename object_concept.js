@@ -277,3 +277,248 @@
 // console.log(personObj1);  //  {name: 'Alex', age: 25}
 // console.log(personObj2);  //  {name: 'john', age: 50}
 
+// --------------------------------------------------------------------------------------------------------
+
+//  This concept
+
+// I.
+// this.a = 5
+// console.log(this.a); // 5
+
+// II. Normal Function
+// this.a = 5;
+// function getParam(){
+//     console.log(this.a); // 5
+// }
+// getParam(); 
+
+// III. Arrow Function
+// this.a = 5;
+// function getParam = () => {
+//     console.log(this.a); // 5
+// };
+// getParam();
+
+
+
+// 1.
+// let user = {
+//     name: "hansraj",
+//     age: 25,
+//     getDetails(){
+//         console.log(this.name); // hasnraj 
+//         console.log(this); // {name: "hasnraj",age:25, getDetails: f}
+//     }
+// }
+// user.getDetails();
+
+// 2.
+// let user = {
+//     name: "hasnraj",
+//     age: 24,
+//     childobj: {
+//         newName: "RoadsideCoder",
+//         getDetails(){
+//             console.log(this.newName, "and", this.name);   // RoadsideCoder and undefined
+//         },
+//     },
+// };
+// user.childobj.getDetails();  
+
+
+// 3. 
+// let user = {
+//     name: "hasnraj",
+//     age: 24,
+//     getDetails: () => {
+//         console.log(this); // here this pointing to the global window object
+//     }
+// }
+// user.getDetails(); 
+
+
+// 4.
+// let user = {
+//     name: "hasnraj",
+//     age: 24,
+//     getDetails(){
+//         const nestedArrow = () => console.log(this.name);  // hansraj // here value of this is user object // bcz it is taking value of it's parent function 
+//         nestedArrow();
+//     },
+// };
+
+// user.getDetails();
+
+// 4.1 using arrow function
+// let user = {
+//     name: "hasnraj",
+//     age: 24,
+//     getDetails: () => {
+//         const nestedArrow = () => console.log(this.name);  // empty
+//         nestedArrow();
+//     },
+// };
+
+// user.getDetails();
+
+
+
+// 5. 
+// class user{
+//     constructor(n){
+//         this.name = n;
+//     }
+
+//     getName(){
+//         console.log(this.name);
+//     }
+// }
+
+// const User = new user("hansraj");
+// console.log(User);  // user {name: "hansraj"}
+// User.getName(); // hasnraj 
+
+
+// Q.1 
+// const user = {
+//     firstName: "hansraj",
+//     getName(){
+//         const firstName = "tomar";
+//         return this.firstName;  // here this pointing to the user object
+//     },
+// };
+
+// console.log(user.getName()); // hasnraj
+
+// Q.2 What is the result of accessing its ref? why?
+// function makeUser(){
+//     return {
+//         name: "john",
+//         ref: this,
+//     };
+// }
+
+// let user = makeUser();
+// console.log(user); // {name: 'john', ref: window}
+// console.log(user.ref.name); // empty
+
+// solution of second question
+// function makeUser(){
+//     return {
+//         name: "john",
+//         ref(){
+//             return this;
+//         }, 
+//     };
+// }
+
+// let user = makeUser();
+// console.log(user.ref().name); // john
+
+
+// Q.3
+// const user = {
+//     name: "hasnraj",
+//     logMessage(){
+//         console.log(this.name); // empty
+//     },
+// };
+
+// setTimeout(user.logMessage, 1000);  
+
+// Solution of third Quetion
+// const user = {
+//     name: "hasnraj",
+//     logMessage(){
+//         console.log(this.name); // hansraj
+//     },
+// };
+
+// // setTimeout(user.logMessage(), 1000);   
+
+// setTimeout(function() {
+//     user.logMessage();
+// }, 1000)
+
+
+// Q.4
+// const  user = {
+//     name : "hasnraj",
+//     greet(){
+//         return `hello, ${this.name}`;
+//     },
+//     farewell: () => {
+//         return `goodbye, ${this.name}`;
+//     },
+// };
+
+// console.log(user.greet()); // hello, hasnraj
+// console.log(user.farewell()); // goodbye, empty
+
+
+// Q.5 create an object calculator
+// let calculator = {
+//     read(){
+//         this.a = +prompt("a=", 0);
+//         this.b = +prompt("b=", 0);
+//     },
+//     sum(){
+//         return this.a + this.b;
+//     },
+//     mul(){
+//         return this.a * this.b;
+//     },
+// };
+
+// calculator.read(); // a = 5, b = 2
+// console.log(calculator.sum()); // 7 
+// console.log(calculator.mul()); // 10
+
+// Q.6
+// var length = 4;
+// function callback(){
+//     console.log(this.length); // 4
+// }
+
+// const obj = {
+//     length: 5,
+//     method(fn){
+//         fn();
+//     }
+// };
+// obj.method(callback);  
+
+// Q.7
+// var length = 4;
+// function callback(){
+//     console.log(this.length);  // 3 // here 3 is length of array
+// }
+
+// const obj = {
+//     length: 5,
+//     method(){ // arguments = [callback, 2, 3]
+//         console.log(arguments); // Arguments(3)[f callback(), 2, 3]
+//         arguments[0]();
+//     }
+// };
+// obj.method(callback, 2, 3);  
+
+
+// 8. Implement calc
+// const calc = {
+//     total: 0,
+//     add(a) {
+//         this.total += a;
+//         return this;
+//     },
+//     multiply(a) {
+//         this.total *= a;
+//         return this;
+//     },
+//     subtract(a) {
+//         this.total -= a;
+//         return this;
+//     }
+// };
+// const result = calc.add(10).multiply(5).subtract(30).add(10);
+// console.log(result.total); // 30

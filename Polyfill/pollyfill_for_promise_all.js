@@ -23,6 +23,7 @@ Promise.myAll = (arrayOfPromises) => {
     return new Promise((resolve,reject) => {
         const result = [];
         let counter = 0;
+
         for(let i = 0; i < arrayOfPromises.length; i++) {
            Promise.resolve(arrayOfPromises[i]).then((data) => {  // promise3 = 10 ko as a ouput show karne ke liye hamne Promise.resolve(arrayOfPromises[i]) likha hai 
                 result[i] = data;

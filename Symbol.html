@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbol</title>
+</head>
+<body>
+    <h1>Symbol</h1>
+    <script>
+        // 1.
+        //  const sym = new Symbol('My identifier')
+        //  console.log(sym); // Error: Symbol is not a constructor
+
+        // 2.
+        // const sym = Symbol('My identifier')
+        // console.log(sym); // Symbol(My identifier)
+        // console.log(typeof sym); // symbol
+
+        // 3. Symbol hame unique value provide karta hai - same identifer hane ke baad bhi ye dono alag alag hai 
+        // let sym1 = Symbol("Hello");
+        // let sym2 = Symbol("Hello");
+        // console.log(sym1 === sym2); // false 
+
+        // let a = "this is"
+        // let b = "this is"
+        // console.log(a===b); // true
+
+        // 4. pehle ham primitive data type ki help se unique chij nhi bna sakte the Sybol hame vo chij provide karta hai 
+        // Pehle primitive data type ki help se unique keys bna pana muskil tha
+        let k1 = Symbol('identifier for k1');
+        let k2 = Symbol('identifier for k2');
+
+        myObj = {
+            
+        }
+        myObj[k1] = "hansraj"
+        myObj[k2] = "Tomar"
+        myObj["name"] = "Good boy"
+
+        console.log(myObj);  // {name: "Good boy", Symbol(identifier for k1): 'hansraj', Symbol(identifier for k2): 'Tomar'}
+        console.log(myObj[k1]); // hansraj 
+        console.log(myObj[k2]); // tomar
+        // console.log(myObj.k2); // we can't do that over on Symbol
+        // console.log(myObj['k2']); // we can't do that over on Symbol
+    
+        // Symbol ko for_in loop me ignore kiya jata hai 
+        for(key in myObj){
+            console.log(key, myObj[key]); // name Good boy
+        }
+
+        // Symbol ko JSON.Stringify() me bhi ingnore kiya jata hai // object ko json me convert karne ke liye ham json.Stringify ka use karte hai 
+        console.log(JSON.stringify(myObj));  // {"name":"Good boy"}
+    </script>
+</body>
+</html>
+
+<!-- 
+    1. Symbol Primitive data type hote hai like number, strin, boolean, null, and undefined 
+    2. 
+-->

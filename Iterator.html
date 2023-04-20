@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iterator</title>
+</head>
+<body>
+    <h1>Iterator</h1>
+    <script>
+        //1.
+        // let number = [100,200,300]
+        // console.log(number);  // (3) [100, 200, 300]
+        // console.log(typeof number[Symbol.iterator]); // function 
+
+        // // ye ek function hai that is why we are using curly braces
+        // let itr = number[Symbol.iterator](); 
+        // console.log(itr); // Array Iterator {} => __proto__: Array Iterator => next: f next() next function ki hepl se ham iski sari value ko read kar pate hai 
+        
+        // console.log(itr.next()); // {value: 100, done: false}
+        // console.log(itr.next()); // {value: 200, done: false}
+        // console.log(itr.next()); // {value: 300, done: false}
+        // console.log(itr.next().value); // 300
+        // console.log(itr.next()); // {value: undefined, done: true}
+
+
+        // 2.
+        // let number2 = [100,200,300]
+        // let itr2 = number2[Symbol.iterator](); 
+        // let result = itr2.next()
+        // while(!result.done){
+        //     console.log(result.value); // 100 200 300
+        //     result = itr2.next();
+        // }
+
+        // 3. 
+        // let str = "hello hi"
+        // let strItr = str[Symbol.iterator]();
+        // let result2 = strItr.next(); 
+        // while(!result.done){
+        //     console.log(result.value); // h e (2)l o  h i
+        //     result = strItr.next();
+        // }
+
+        // 4. Now we will create our own Iterator
+        function numberIterator(arr){
+            var nextNum = 0;
+            return {
+                next(){
+                    if(nextNum < arr.length){
+                        return {
+                            value: arr[nextNum++],
+                            done: false
+                        }
+                    }else{
+                        return {
+                            done: true
+                        }
+                    }
+
+                }
+            }
+        }
+        let numbers = [100,200,300]
+        let num = numberIterator(numbers);
+        console.log(num.next());  // {value: 100, done: false}
+        num.next();  // yha ham 200 ki value ko print nhi karva rhe hai 
+        console.log(num.next());  // {value: 300, done: false}
+        console.log(num.next());  // {done: true}
+
+
+    </script>
+</body>
+</html>
+
+
+// Iterator 
+// like we have array and i want to traverse in that array for that we used to use while, do_while, for, for_in, for_of, for_each, map() loop
+// iterator do the same work but we can skip any data from array very easily, this can be done by normal loop but for that we have to use conditions inside loop
+
+// iterator ko ham string or object ke sath bhi use kar sakte hai 
+var x = ["Apple", "orange", "grapes"];
+let y = x[Symbol.iterator]();
+y.next(); // apple
+y.next(); // orange
+y.next(); // grapes
+
+// yha ham array ki place par string or object ka bhi use kar sakte hai
