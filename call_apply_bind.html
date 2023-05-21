@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call, Apply And Bind Method</title>
+    <title>Call, Apply And Bind Method by roadside coder</title>
 </head>
 <body>
     <h1>Call, Apply and Bind Method</h1>
     <script>
         // By RoadSide Coder
+
+        // 1. what is call ?
+    //     var obj = {name : "hansraj"}
+
+    //     function sayHello() {
+    //         return "Hello" + this.name;
+    //     }
+
+    //    console.log(sayHello()); // hello ....
+    //    console.log(sayHello.call(obj)); // hello hansraj 
+
+
+        // Output based Interview Questions 
         // 1.
         // var status = "outer";
         // setTimeout(() => {
@@ -25,6 +38,9 @@
         //     console.log(data.getStatus()); // deep inner
         //     console.log(data.getStatus.call(this)); // outer
         // }, 0);
+        // this never points to a function and setTimeout over here is obviously a function so this will not point to it
+        // instead it will point to the context of this function so what this function is pointing to the setTimeout is pointing
+        // to the global object so that is why this keyword over here will be a global object
 
         // 2. 
         // const animals = [

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollyfill For Array.flat() Method</title>
+</head>
+<body>
+    <script>
+        // arr.flat() method also return the copy of that array
+        let arr = [1,2,[3,4]];
+        console.log(arr.flat()); // [1,2,3,4]
+        // it also take dept as an argument arr.flat(1)
+
+        // Now we have to write pollyfill for flat() method
+        Array.prototype.myflat = function (depth) {
+            // console.log(this); // [1,2,[3,4]]
+            let res = [];
+            if(!Array.isArray(this)) {
+                throw new Error(`${this}.flat is not a function`);
+            }
+            this.forEach((el) => {
+                if(Array.isArray(el) && depth > 0){
+                    res.push(...el.myflat(depth-1));
+                } else {
+                    res.push(el);
+                }
+            });
+            return res;
+        }
+    </script>
+</body>
+</html>

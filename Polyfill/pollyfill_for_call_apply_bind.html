@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollyfill For Call, Apply, and Bind Method</title>
+</head>
+<body>
+    <script>
+          // 10. Pollyfill for call,apply and bind
+        let car1 = {
+            color: "Red",
+            company: "Ferrari",
+        };
+
+        function purchaseCar(currency, price){
+            console.log(`I have Purchase ${this.color} - ${this.company} car for ${currency} ${price}`);
+        }
+        // purchaseCar.call(car1, "$", 200000000);
+
+        // Pollyfill for Call Method
+        // context = car1
+        Function.prototype.myCall = function(context = {}, ...args){
+            if(typeof this !== "function"){
+                throw new Error(this + "It's not callable");
+            }
+            // console.log(this); // this = purchaseCar() function
+            context.fn = this;
+            context.fn(...args);
+        }
+        purchaseCar.myCall(car1, "'$", 2000000);
+        
+        
+        // Pollyfill for Apply Method
+        Function.prototype.myApply = function(context = {}, args = []){
+            if(typeof this !== "function"){
+                throw new Error(this + "It's not callable");
+            }
+            if(!Array.isArray(args)){
+                throw new TypeError("createListFromArrayLike called on non-objects");
+            }
+            context.fn = this;
+            context.fn(...args);
+        }
+        purchaseCar.myApply(car1, ["$", 2000000]);
+
+        // Pollyfill for bind method
+    
+        // let newFunc = purchaseCar.bind(car1, "$");
+        // console.log(newFunc(20000000));
+
+        Function.prototype.myBind = function(context = {}, ...args){
+            if(typeof this !== "function"){
+                throw new Error(this + "cannot be bound as it's not callable");
+            }
+            
+            context.fn = this;
+            return function(...newArgs) {
+                return context.fn(...args, ...newArgs);
+            };
+        }
+        // let newFunc = purchaseCar.myBind(car1, "$", 2000000);
+        // console.log(newFunc());
+        let newFunc = purchaseCar.myBind(car1);
+        console.log(newFunc("$", 20000000));
+
+    </script>
+</body>
+</html>

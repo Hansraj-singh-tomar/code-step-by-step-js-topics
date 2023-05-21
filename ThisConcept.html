@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>This Concept inside object.</title>
+    <title>This Concept inside object, Explained by roadside coder.</title>
 </head>
 <body>
     <h1>This concept inside object.</h1>
     <script>
         //  This concept
+        // Implicit - when you invoke an function in an object using the dot notation,
+                // this keyword in such scenarios will point to the object using which the function was  invoked or 
+                // simply the object on the left hand side of the dot 
 
+        // Explicit - explicit binding can be applied using call,apply and bind 
             // I.
             // this.a = 5
             // console.log(this.a); // 5
@@ -56,23 +60,27 @@
             // user.childobj.getDetails();  
 
 
-            // 3. 
+            // 3. Case of Arrow function 
             // let user = {
             //     name: "hasnraj",
             //     age: 24,
+            //     using an Arrow function 
             //     getDetails: () => {
             //         console.log(this); // window // here this pointing to the global window object
+            //         console.log(this.name) // empty we are not getting anything here
             //     }
             // }
             // user.getDetails(); 
 
 
-            // 4.
+            // 4. This is an very interesting point
             // let user = {
             //     name: "hasnraj",
             //     age: 24,
+            //     here the value of this will be user now why bcz it takes the value of this from its parent function which is getDetails and this parent function (getDetails) taking the value of this from user object
+            //     so that's why this is inheriting that value from getDetails into this nested arrow and that is why it is pointing to getDetails
             //     getDetails(){
-            //         const nestedArrow = () => console.log(this.name);  // hansraj  // here this pointing to the user object 
+            //         const nestedArrow = () => console.log(this.name);  // hansraj 
             //         nestedArrow();
             //     },
             // };
@@ -94,7 +102,9 @@
             // console.log(User);  // user {name: "hansraj"}
             // User.getName(); // hasnraj 
 
+// ----------------------------------------------------------------------------------------------------------------------
 
+            // Interview Questions
             // Q.1 
             // const user = {
             //     firstName: "hansraj",
@@ -114,9 +124,9 @@
             //     };
             // }
 
-            // let user = makeUser();
+            // let user = makeUser(); // here parent object is window object
             // console.log(user); // {name: 'john', ref: window}
-            // console.log(user.ref.name); // empty
+            // console.log(user.ref.name); // empty // this inside of the ref will be pointing to window object and window object doesn't have anything called name so that is it's an empty
 
             // solution of second question
             // function makeUser(){
@@ -145,7 +155,7 @@
             // so this complete function right here will be copied inside this settimeout and this will no longer
             // have access to this user object right over here 
 
-            // Solution of third Quetion
+            // Solution of third Question
             // const user = {
             //     name: "hasnraj",
             //     logMessage(){
@@ -158,6 +168,48 @@
             // setTimeout(function() {
             //     user.logMessage();
             // }, 1000)
+
+            // another problem related to setTimeout
+            // const myObject = {
+            //     name: 'John',
+            //     myMethod: function() {
+            //         setTimeout(function() {
+            //         console.log(this.name);
+            //         }, 1000);
+            //     }
+            // };
+            // myObject.myMethod(); // undefined
+
+
+            // solution of it using bind method 
+            // const myObject = {
+            //     name: 'John',
+            //     myMethod: function() {
+            //         setTimeout(function() {
+            //         console.log(this.name);
+            //         }.bind(this), 1000);
+            //     }
+            // };
+
+            // myObject.myMethod(); // John
+
+
+            // Another Example - 
+            const object = {
+                message: "Hello World !",
+                legMessage(){
+                    console.log(this.message);
+                }
+            };
+            setTimeout(object.logMessage, 1000); // ouput is - undefined
+
+            // first solution is 
+            object.logMessage(); // hello world ! 
+
+            // second solution is  using setTimeout function
+            setTimeout(() => object.logMessage(), 1000); // hello world !
+             
+
 
 
             // Q.4.1
@@ -255,13 +307,15 @@
             // };
             // obj.method(callback, 2, 3);  
 
+            // Ans - 3 
 
-            // 8. Implement calc
+
+            // 8. Implement calc - This problem asked in cars20 company
             // const calc = {
             //     total: 0,
             //     add(a) {
             //         this.total += a;
-            //         return this;
+            //         return this; // here this is pointing to total
             //     },
             //     multiply(a) {
             //         this.total *= a;
@@ -274,6 +328,72 @@
             // };
             // const result = calc.add(10).multiply(5).subtract(30).add(10);
             // console.log(result.total); // 30
+
+
+            // From chatGpt
+            // 1.
+            // let user = {
+            //     name: "hansraj",
+            //     age: 25,
+            //     getDetails(){
+            //         console.log(this.name); // hasnraj 
+            //         console.log(this); // {name: "hasnraj",age:25, getDetails: f}
+            //     }
+            // }
+            // user.getDetails();
+
+            // 1. 
+            // const myObject = {
+            //     name: 'John',
+            //     getName: function() {
+            //         console.log(this.name);
+            //     }
+            // };
+
+            // const myFunction = myObject.getName;
+            // myFunction; // nothing in console 
+            
+            // 2. solution of above code is
+            // const myObject = {
+            //     name: 'John',
+            //     getName: function() {
+            //         console.log(this.name);
+            //     }
+            // };
+
+            // const myFunction = myObject.getName();
+            // myFunction; // john
+            
+            // 3. solution of above code is 
+            // const myObject = {
+            //     name: 'John',
+            //     getName: function() {
+            //         console.log(this.name);
+            //     }
+            // };
+
+            // const myFunction = myObject.getName.bind(myObject);
+            // myFunction(); // john
+
+            // 4. 
+            // const myObject = {
+            //     name: 'John',
+            //     getName: function() {
+            //         console.log(this.name);
+            //     }
+            // };
+
+            // const myOtherObject = {
+            //     name: 'Sarah'
+            // };
+
+            // myOtherObject.getName = myObject.getName;
+            // myOtherObject.getName(); // sarah
+
+            // for explicit binding we will use call,apply bind method 
+
+
+
     </script>
 </body>
 </html>
