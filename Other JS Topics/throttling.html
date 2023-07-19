@@ -1,0 +1,33 @@
+<!-- Throttling is used to call a function after every milisecond or a particular
+interval of time only the first click is exacuted immediately. -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throttling</title>
+</head>
+<body>
+    <button id="myid" onclick="newFun()">Click Me</button>
+    <script>
+        function throttle(){
+            document.getElementById("myid").disabled=false;
+            console.log("User Clicked!!!");
+        }
+        function myThrottle(fun,d){
+            return function(...args){
+                document.getElementById("myid").disabled=true;
+                setTimeout(() => {
+                    fun();
+                }, d);
+            }
+        }
+        const newFun = myThrottle(throttle,2000);
+    </script>
+</body>
+</html>
+
+

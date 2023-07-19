@@ -1,0 +1,27 @@
+// 1. DDL = data definition language
+// CREATE - create table, DB, view
+// ALTER TABLE - modification in table structure e.g., change column datatype 
+                or add/remove columns.
+// DROP - delete table, DB, view.
+// TRUNCATE - remove all the tuples(rows and column) from the table.
+// RENAME - rename DB name, table name, column name etc.
+
+
+// 2. DRL/DQL = data retrieval language/ data query language - retrive data from the tables
+// SELECT
+
+// 3. DML - data modification language - use to perform modification in the DB
+// INSERT - insert data into a relation
+// UPDATE - update relation data.
+// DELETE - delete row(s) from the relation
+
+// 4. DCL - data control lang.
+// GRANT - access privileges to the DB
+// REVOKE - revoke user access privileges.
+
+// 5. TCL(transaction control language) - to manage transaction done in the DB
+// START TRANSACTION - begin transaction
+// CMMIT - apply all the changes and end transaction
+// ROLLBACK - discard  changes and end transaction
+// SAVEPOINT - checkout within the group of transaction in which to rollback.
+

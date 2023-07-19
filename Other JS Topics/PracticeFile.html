@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Topics</title>
+</head>
+<body>
+    <script>
+
+        // we will create a pollyfill for map method
+        let arr = [1,2,3,4,5,6,7,8];
+        
+        // let newArr = arr.map((el) => el * 2);
+        // console.log(newArr);
+
+        // now we will create our own pollyfill
+        Array.prototype.myMap = function(cb){
+            // console.log(this);
+            let res = [];
+            for(let i = 0; i < this.length; i++){
+                res.push(cb(this[i]));
+            }
+            return res;
+        }
+
+        let newArr = arr.myMap((el) => el * 2);
+        // console.log(newArr);
+
+
+
+        // Now we will create a pollyfill for filter method 
+
+        Array.prototype.myFilter = function(cb){
+            let res = [];
+            for(let i = 0; i < this.length; i++){
+                if(cb(this[i], i, this)){
+                    res.push(this[i]);
+                }
+            }
+            return res;
+        } 
+
+        let newArr2 = arr.myFilter((el) => {
+            if(el > 4){
+                return el
+            }
+        })
+
+        // console.log(newArr2);
+
+
+
+        // now we will create a pollyfill for reduce method 
+        Array.prototype.myReduce = function(cb, initialVal){
+            let acc = initialVal;
+            for(let i = 0; i < this.length; i++){
+                acc = acc ? cb(acc, this[i], i, this) : this[i];
+            }
+            return acc;
+        }
+
+        let newArr3 = arr.myReduce((acc, val) => {
+            return acc + val
+        })
+        console.log(newArr3);
+
+        let car = {
+            company: 'innova',
+        }
+
+        function purchaseCar(price){
+            console.log(`${this.company} and price is ${price}`);
+        }
+
+        // purchaseCar.call(car, 20000);
+        Function.prototype.myCall = function(obj, ...args){
+            obj.fn = this;
+            obj.fn(...args)
+        }
+        purchaseCar.myCall(car, 20000);
+    </script>
+</body>
+</html>

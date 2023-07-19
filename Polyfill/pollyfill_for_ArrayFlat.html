@@ -9,26 +9,42 @@
 <body>
     <script>
         // arr.flat() method also return the copy of that array
-        let arr = [1,2,[3,4]];
-        console.log(arr.flat()); // [1,2,3,4]
+        let arr = [1,[2,[3,4]]];
+        // console.log(arr.flat()); // [1,2,3,4]
         // it also take dept as an argument arr.flat(1)
 
         // Now we have to write pollyfill for flat() method
         Array.prototype.myflat = function (depth) {
-            // console.log(this); // [1,2,[3,4]]
+            // console.log(this); // [1,2,[3,4]] => Here this = arr.flat() me arr = this
             let res = [];
             if(!Array.isArray(this)) {
                 throw new Error(`${this}.flat is not a function`);
             }
             this.forEach((el) => {
                 if(Array.isArray(el) && depth > 0){
-                    res.push(...el.myflat(depth-1));
+                    res.push(...el.myflat(depth-1)); 
+                    // console.log(res);
+                    // console.log(el.myflat(depth-1));
                 } else {
                     res.push(el);
+                    // console.log(res);
                 }
+                // console.log(res);
             });
             return res;
         }
+        // console.log(arr);
+        console.log(arr.myflat(2));
     </script>
 </body>
 </html>
+
+<!-- In this example, the original array [1, [2, [3, 4]]] has a depth of 2. When the myflat() method is called with a depth of 2, it enters the first level of recursion.
+
+In the first iteration, el is 1. Since it is not an array or the depth is 0, el is pushed directly into the res array.
+
+In the second iteration, el is [2, [3, 4]]. Since it is an array and the depth is still greater than 0, the myflat() method is called on this element with a decreased depth of 1.
+
+In the recursive call, el is 2. Again, since it is not an array or the depth is 0, el is pushed into the res array.
+
+Finally, in the second level of recursion, el is [3, 4]. Since it is an array and the depth is 0, the recursion stops. The individual elements (3 and 4) are pushed into the res array. -->

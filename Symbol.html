@@ -7,8 +7,11 @@
     <title>Symbol</title>
 </head>
 <body>
-    <h1>Symbol</h1>
+    <h1>Symbol - Using Code with harry and Yahoo Baba</h1>
     <script>
+ 
+        //  1. Symbol Primitive data type hote hai like number, string, boolean, null, and undefined 
+
         // 1.
         //  const sym = new Symbol('My identifier')
         //  console.log(sym); // Error: Symbol is not a constructor
@@ -18,7 +21,8 @@
         // console.log(sym); // Symbol(My identifier)
         // console.log(typeof sym); // symbol
 
-        // 3. Symbol hame unique value provide karta hai - same identifer hane ke baad bhi ye dono alag alag hai 
+        // 3. Why we use Symbol
+        // Symbol hame unique value provide karta hai - same identifer hane ke baad bhi ye dono alag alag hai 
         // let sym1 = Symbol("Hello");
         // let sym2 = Symbol("Hello");
         // console.log(sym1 === sym2); // false 
@@ -27,36 +31,62 @@
         // let b = "this is"
         // console.log(a===b); // true
 
-        // 4. pehle ham primitive data type ki help se unique chij nhi bna sakte the Sybol hame vo chij provide karta hai 
+        // 4. - Agar hame Symbol ki value ko document me use karna chate hai to hame toString() method ka use karna padega exp :- 
+        let id = Symbol("Hello");
+        console.log(id); // Symbol(Hello)
+        console.log(id.toString()); // string
+        console.log(typeof (id.toString())); // Symbol(Hello)
+        console.log(id.description); // Hello
+        alert(id); // TypeError; Cannot convert a symbol value to a string
+        alert(id.toString()) // Symbol(Hello)
+        alert(id.description) // Hello 
+
+
+        // 5. pehle ham primitive data type ki help se unique chij nhi bna sakte the Symbol hame vo chij provide karta hai 
         // Pehle primitive data type ki help se unique keys bna pana muskil tha
+        
+        
+        // ham object ki do property bnayenge jinki key same rhegi,
+        // jo ham pahle object me nhi kar sakte the pehle esa karne par value override ho jati thi 
         let k1 = Symbol('identifier for k1');
         let k2 = Symbol('identifier for k2');
-
+        let age = Symbol();
         myObj = {
-            
+            [age]: 23 
         }
         myObj[k1] = "hansraj"
         myObj[k2] = "Tomar"
         myObj["name"] = "Good boy"
 
-        console.log(myObj);  // {name: "Good boy", Symbol(identifier for k1): 'hansraj', Symbol(identifier for k2): 'Tomar'}
+        console.log(myObj);  // {name: "Good boy", Symbol(): 23, Symbol(identifier for k1): 'hansraj', Symbol(identifier for k2): 'Tomar'}
         console.log(myObj[k1]); // hansraj 
         console.log(myObj[k2]); // tomar
         // console.log(myObj.k2); // we can't do that over on Symbol
         // console.log(myObj['k2']); // we can't do that over on Symbol
     
-        // Symbol ko for_in loop me ignore kiya jata hai 
+        // Note - Symbol ko for_in loop me ignore kiya jata hai 
         for(key in myObj){
             console.log(key, myObj[key]); // name Good boy
         }
 
-        // Symbol ko JSON.Stringify() me bhi ingnore kiya jata hai // object ko json me convert karne ke liye ham json.Stringify ka use karte hai 
+        // Note - Symbol ko JSON.Stringify() me bhi ingnore kiya jata hai // object ko json me convert karne ke liye ham json.Stringify ka use karte hai 
         console.log(JSON.stringify(myObj));  // {"name":"Good boy"}
+
+
+
+        // 6. Yahoo Baba 
+        // let age = Symbol(23);
+        // console.log(age); // Symbol(23)
+        // console.log(typeof age); // Symbol
+        // console.log(age.toString()); // Symbol(23)
+        // console.log(typeof (age.toString())); // string
+        // console.log(age.description); // 23
+        // console.log(age.valueOf(age)); // Symbol(23) 
+        // console.log(typeof (age.valueOf(age))); // symbol 
+        // alert(age); // TypeError: Cannot convert a symbol value to a string
+        // alert(age.toString()) // Symbol(23)
+        // alert(age.description) // 23
     </script>
 </body>
 </html>
 
-<!-- 
-    1. Symbol Primitive data type hote hai like number, strin, boolean, null, and undefined 
-    2. 
--->
