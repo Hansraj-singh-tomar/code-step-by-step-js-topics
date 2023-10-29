@@ -1,85 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS Topics</title>
-</head>
-<body>
+  </head>
+  <body>
+    <h1>Debouncing and Throtlling and Memoization</h1>
+
     <script>
+      // Objects methods
+      // let obj = {
+      //   a: "somestring",
+      //   b: 42,
+      //   c: false,
+      // };
 
-        // we will create a pollyfill for map method
-        let arr = [1,2,3,4,5,6,7,8];
-        
-        // let newArr = arr.map((el) => el * 2);
-        // console.log(newArr);
+      // console.log(Object.keys(obj));
 
-        // now we will create our own pollyfill
-        Array.prototype.myMap = function(cb){
-            // console.log(this);
-            let res = [];
-            for(let i = 0; i < this.length; i++){
-                res.push(cb(this[i]));
-            }
-            return res;
+      // let arr = ["a", "b", "e"];
+      // console.log(Object.keys(arr));
+
+      // let obj2 = {
+      //   100: "a",
+      //   2: "g",
+      //   7: "b",
+      // };
+
+      // console.log(Object.keys(obj2));
+
+      // console.log(Object.keys("FOOO"));
+
+      // console.log(Object.keys(100));
+
+      // custom my flat method
+      let arr = [2, 3, [4, 5, [6, 7]]];
+      // console.log(arr.flat(2));
+      Array.prototype.myFlat = function (depth) {
+        if (!Array.isArray(this)) {
+          throw new Error("It's work only for array");
         }
 
-        let newArr = arr.myMap((el) => el * 2);
-        // console.log(newArr);
+        let res = [];
 
+        this.map((el, i) => {
+          // console.log(el);
+          if (Array.isArray(el) && depth > 0) {
+            console.log(...el.myFlat(depth - 1));
+            // return el.myFlat(depth - 1);
+            // res.push(...el.myFlat(depth - 1));
+            // simplify version of above line
+            // res.push(...(depth > 1 && Array.isArray(el) ? el.myFlat(depth - 1) : [el]));
+          } else {
+            res.push(el);
+          }
+        });
+        return res;
+      };
 
+      console.log(arr.myFlat(2));
 
-        // Now we will create a pollyfill for filter method 
+      // pollyfill for deepCopy()
 
-        Array.prototype.myFilter = function(cb){
-            let res = [];
-            for(let i = 0; i < this.length; i++){
-                if(cb(this[i], i, this)){
-                    res.push(this[i]);
-                }
-            }
-            return res;
-        } 
+      // function deepCopy(val) {
+      //   if (["string", "array", "boolean"].includes(typeof val)) {
+      //     return val;
+      //   } else if (Array.isArray(val)) {
+      //     return val.map((v, i) => {
+      //       return v;
+      //     });
+      //   } else {
+      //     return Object.keys(val).reduce((acc, key) => {
+      //       acc[key] = deepCopy(val[key]);
+      //       return acc;
+      //     }, {});
+      //   }
+      // }
 
-        let newArr2 = arr.myFilter((el) => {
-            if(el > 4){
-                return el
-            }
-        })
+      // let obj = {
+      //   a: {
+      //     b: {
+      //       c: 23,
+      //     },
+      //   },
+      // };
 
-        // console.log(newArr2);
+      // let obj2 = deepCopy(obj);
+      // obj2.a.b.c = 11;
+      // console.log(obj);
+      // console.log(obj2);
 
+      // let arr = [1, 2, 3, 4];
+      // let arr2 = deepCopy(arr);
+      // console.log(arr);
+      // arr2.push(5);
+      // console.log(arr2);
 
+      // // pollyfill for reduce() method
 
-        // now we will create a pollyfill for reduce method 
-        Array.prototype.myReduce = function(cb, initialVal){
-            let acc = initialVal;
-            for(let i = 0; i < this.length; i++){
-                acc = acc ? cb(acc, this[i], i, this) : this[i];
-            }
-            return acc;
-        }
+      // let arr = [1, 2, 3, 4, 5];
 
-        let newArr3 = arr.myReduce((acc, val) => {
-            return acc + val
-        })
-        console.log(newArr3);
+      // Array.prototype.myReduce = function (cb, initialVal) {
+      //   let acc = initialVal;
 
-        let car = {
-            company: 'innova',
-        }
+      //   for (let i = 0; i < this.length; i++) {
+      //     acc = acc ? cb(acc, this[i], i, this) : this[i];
+      //   }
+      //   return acc;
+      // };
 
-        function purchaseCar(price){
-            console.log(`${this.company} and price is ${price}`);
-        }
+      // // let newArr = arr.reduce((acc, el) => {
+      // //   return acc + el;
+      // // }, 0);
 
-        // purchaseCar.call(car, 20000);
-        Function.prototype.myCall = function(obj, ...args){
-            obj.fn = this;
-            obj.fn(...args)
-        }
-        purchaseCar.myCall(car, 20000);
+      // let newArr = arr.myReduce((acc, el) => {
+      //   return acc + el;
+      // }, 0);
+
+      // console.log(arr);
+      // console.log(newArr);
+      // seal - we can update and read object
     </script>
-</body>
+  </body>
 </html>

@@ -1,255 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Object Static Methods</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Object Static Method</h1>
     <script>
-        // Object.keys(obj)
-        // // 1.
-        // const object1 = {
-        //     a: "somestring",
-        //     b: 42,
-        //     c: false
-        // }
-        // console.log(Object.keys(object1));  // ["a","b","c"]
+      // Object.keys(obj)
+      // // 1.
+      // const object1 = {
+      //     a: "somestring",
+      //     b: 42,
+      //     c: false
+      // }
+      // console.log(Object.keys(object1));  // ["a","b","c"]
 
-        // // 2. 
-        // let arr = ["a", "b", "c"]
-        // console.log(Object.keys(arr)); // ["0", "1", "2"]
+      // // 2.
+      // let arr = ["a", "b", "c"]
+      // console.log(Object.keys(arr)); // ["0", "1", "2"]
 
-        // // 3. 
-        // const obj = {100: 'a', 2: 'b', 7: 'c'}
-        // console.log(Object.keys(obj)); // ['2', '7', '100']
+      // // 3.
+      // const obj = {100: 'a', 2: 'b', 7: 'c'}
+      // console.log(Object.keys(obj)); // ['2', '7', '100']
 
-        // // 4.
-        // const obj2 = {0: "a", 1: "b", 2: "c"};
-        // console.log(Object.keys(obj2)); // ["0", "1", "2"]
+      // // 4.
+      // const obj2 = {0: "a", 1: "b", 2: "c"};
+      // console.log(Object.keys(obj2)); // ["0", "1", "2"]
 
-        // // 5. 
-        // console.log(Object.keys("foo")); // ['0', '1', '2']
+      // // 5.
+      // console.log(Object.keys("foo")); // ['0', '1', '2']
 
-        // // 6.
-        // console.log(Object.keys(100)); // []
+      // // 6.
+      // console.log(Object.keys(100)); // []
 
-// ----------------------------------------------------------------------------
-        
-        // Object.values(obj)
-        // // 1. 
-        // const object2 = {
-        //     a: "somestring",
-        //     b: 42,
-        //     c: false
-        // }
-        // console.log(Object.values(object2));  //  ['somestring', 42, false]
-        
-        // // 2. 
-        // const obj3 = {100: 'a', 2: 'b', 7: 'c'}
-        // console.log(Object.keys(obj3)); // ['b', 'c', 'a']
+      // ----------------------------------------------------------------------------
 
-        // // 3.
-        // console.log(Object.values("foo"));  // ['f', 'o', 'o']
+      // Object.values(obj)
+      // // 1.
+      // const object2 = {
+      //     a: "somestring",
+      //     b: 42,
+      //     c: false
+      // }
+      // console.log(Object.values(object2));  //  ['somestring', 42, false]
 
-        // // 4. 
-        // console.log(Object.values(100)); // []
+      // // 2.
+      // const obj3 = {100: 'a', 2: 'b', 7: 'c'}
+      // console.log(Object.keys(obj3)); // ['b', 'c', 'a']
 
-// ---------------------------------------------------------------------
-        // Object.create(obj)
-        
-        // // 1.        
-        // const person = {
-        //     isHuman: false,
-        //     name: "web docs"
-        // }
+      // // 3.
+      // console.log(Object.values("foo"));  // ['f', 'o', 'o']
 
-        // let person2 = Object.create(person);
+      // // 4.
+      // console.log(Object.values(100)); // []
 
-        // person2.isHuman = true;
-        // person2.name = "mdn";
+      // ---------------------------------------------------------------------
+      // Object.create(obj)
 
-        // console.log(person); // {isHuman: false, name: 'web docs'}
-        // console.log(person2);  // {isHuman: true, name: 'mdn'}
-        
-        // // Note - person2 object ke prototype me hame person object milega
-        // console.log(person2.__proto__); // {isHuman: false, name: 'web docs'}
-        
-        // console.log(person === person2.__proto__); // true
-        
-        // console.log(person2 instanceof Object); // true
+      // // 1.
+      // const person = {
+      //     isHuman: false,
+      //     name: "web docs"
+      // }
 
-        // console.log(person instanceof Object); // true
+      // let person2 = Object.create(person);
 
-        // console.log(person2.hasOwnProperty('name')); // true
-        // console.log(person.hasOwnProperty('name')); // true
+      // person2.isHuman = true;
+      // person2.name = "mdn";
 
-        // // 2.
-        // const newCar = Object.create(null);
-        // console.log(newCar); // {}
-         
-// ----------------------------------------------------------------------
+      // console.log(person); // {isHuman: false, name: 'web docs'}
+      // console.log(person2);  // {isHuman: true, name: 'mdn'}
 
-        // Object.entries(obj)
-        // // 1.
-        // const obj = { foo: "bar", baz: 42 };
-        // console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
+      // // Note - person2 object ke prototype me hame person object milega
+      // console.log(person2.__proto__); // {isHuman: false, name: 'web docs'}
 
-        // // 2. 
-        // const anObj = { 100: "a", 2: "b", 7: "c" };
-        // console.log(Object.entries(anObj)); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
+      // console.log(person === person2.__proto__); // true
 
-        // // 3.
-        // const object1 = {
-        //     a: 'somestring',
-        //     b: 42
-        // };
-        
-        // console.log(Object.entries(object1)); // [ ['a', 'somestring'], ['b', 42] ]
+      // console.log(person2 instanceof Object); // true
 
-        // for (const [key, value] of Object.entries(object1)) {
-        //     console.log(`${key}: ${value}`);
-        // }
+      // console.log(person instanceof Object); // true
 
-        // // output:
-        // // "a: somestring"
-        // // "b: 42"
+      // console.log(person2.hasOwnProperty('name')); // true
+      // console.log(person.hasOwnProperty('name')); // true
 
-        // // Using array methods
-        // Object.entries(obj).forEach(([key, value]) => {
-        //     console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
-        // });
+      // // 2.
+      // const newCar = Object.create(null);
+      // console.log(newCar); // {}
 
-        // // 4.
-        // console.log(Object.entries("foo")); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
-        // console.log(Object.entries(100)); // []
+      // ----------------------------------------------------------------------
 
-        // // Converting an Object to a Map
-        // const objj = { foo: "bar", baz: 42 };
-        // const map = new Map(Object.entries(objj));
-        // console.log(map); // Map(2) {"foo" => "bar", "baz" => 42}
+      // Object.entries(obj)
+      // // 1.
+      // const obj = { foo: "bar", baz: 42 };
+      // console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
 
-// ------------------------------------------------------------------------------------------------
-        
-        // Object.fromEntries(arr)
+      // // 2.
+      // const anObj = { 100: "a", 2: "b", 7: "c" };
+      // console.log(Object.entries(anObj)); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
 
-        // // 1.
-        // let arr = [ ['foo', 'bar'], ['baz', 42] ];
-        // console.log(Object.fromEntries(arr));  // {foo: 'bar', baz: 42}
+      // // 3.
+      // const object1 = {
+      //     a: 'somestring',
+      //     b: 42
+      // };
 
-        // // 2.
-        // const entries = new Map([
-        //     ['foo', 'bar'],
-        //     ['baz', 42]
-        // ]);
+      // console.log(Object.entries(object1)); // [ ['a', 'somestring'], ['b', 42] ]
 
-        // const obj = Object.fromEntries(entries);
+      // for (const [key, value] of Object.entries(object1)) {
+      //     console.log(`${key}: ${value}`);
+      // }
 
-        // console.log(obj);  // { foo: "bar", baz: 42 }
+      // // output:
+      // // "a: somestring"
+      // // "b: 42"
 
-        // // 3.
-        // const arrr = [
-        //     ["0", "a"],
-        //     ["1", "b"],
-        //     ["2", "c"],
-        // ];
-        // const objj = Object.fromEntries(arrr);
-        // console.log(objj); // { 0: "a", 1: "b", 2: "c" }
+      // // Using array methods
+      // Object.entries(obj).forEach(([key, value]) => {
+      //     console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+      // });
 
-        // // 4 - object transfromation
-        // const object1 = { a: 1, b: 2, c: 3 };
+      // // 4.
+      // console.log(Object.entries("foo")); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+      // console.log(Object.entries(100)); // []
 
-        // const object2 = Object.fromEntries(
-        //     Object.entries(object1).map(([key, val]) => [key, val * 2]),
-        // );
+      // // Converting an Object to a Map
+      // const objj = { foo: "bar", baz: 42 };
+      // const map = new Map(Object.entries(objj));
+      // console.log(map); // Map(2) {"foo" => "bar", "baz" => 42}
 
-        // console.log(object2);  // { a: 2, b: 4, c: 6 }
+      // ------------------------------------------------------------------------------------------------
 
+      // Object.fromEntries(arr)
 
-// ------------------------------------------------------------------------------------------------
+      // // 1.
+      // let arr = [ ['foo', 'bar'], ['baz', 42] ];
+      // console.log(Object.fromEntries(arr));  // {foo: 'bar', baz: 42}
 
-        // Object.seal(obj) - we can update and read object using this method
-        
-        // // 1.
-        // const object1 = {
-        //     property1: 42
-        // };
+      // // 2.
+      // const entries = new Map([
+      //     ['foo', 'bar'],
+      //     ['baz', 42]
+      // ]);
 
-        // Object.seal(object1);
-        // object1.property1 = 33;
-        // console.log(object1.property1);
-        // // Expected output: 33
+      // const obj = Object.fromEntries(entries);
 
-        // delete object1.property1; // Cannot delete when sealed
-        // console.log(object1.property1);
-        // // Expected output: 33
+      // console.log(obj);  // { foo: "bar", baz: 42 }
 
-// -----------------------------------------------------------------------------------------------
-    // Object.freeze(obj) - we can't update,delete,create in this case only can read 
-    // // 1. 
-    // const a = [0];
-    // Object.freeze(a); // The array cannot be modified now.
+      // // 3.
+      // const arrr = [
+      //     ["0", "a"],
+      //     ["1", "b"],
+      //     ["2", "c"],
+      // ];
+      // const objj = Object.fromEntries(arrr);
+      // console.log(objj); // { 0: "a", 1: "b", 2: "c" }
 
-    // a[0] = 1; 
-    // console.log(a); // [0]
+      // // 4 - object transfromation
+      // const object1 = { a: 1, b: 2, c: 3 };
 
-    // // 2.
-    // const obj = {
-    //     prop: 42
-    // };
+      // const object2 = Object.fromEntries(
+      //     Object.entries(object1).map(([key, val]) => [key, val * 2]),
+      // );
 
-    // Object.freeze(obj);
+      // console.log(object2);  // { a: 2, b: 4, c: 6 }
 
-    // obj.prop = 33;
-    // // Throws an error in strict mode
+      // ------------------------------------------------------------------------------------------------
 
-    // console.log(obj.prop);
-    // // Expected output: 42
+      // Object.seal(obj) - we can update and read object using this method
 
-    // // 3. - shallow freeze
-    // const employee = {
-    //     name: "Mayank",
-    //     designation: "Developer",
-    //     address: {
-    //         street: "Rohini",
-    //         city: "Delhi",
-    //     },
-    // };
+      // // 1.
+      // const object1 = {
+      //     property1: 42
+      // };
 
-    // Object.freeze(employee);
+      // Object.seal(object1);
+      // object1.property1 = 33;
+      // console.log(object1.property1);
+      // // Expected output: 33
 
-    // employee.name = "Dummy"; // fails silently in non-strict mode
-    // employee.address.city = "Noida"; // attributes of child object can be modified
+      // delete object1.property1; // Cannot delete when sealed
+      // console.log(object1.property1);
+      // // Expected output: 33
 
-    // console.log(employee.address.city); // "Noida"
+      // -----------------------------------------------------------------------------------------------
+      // Object.freeze(obj) - we can't update,delete,create in this case only can read
+      // // 1.
+      // const a = [0];
+      // Object.freeze(a); // The array cannot be modified now.
 
-// ---------------------------------------------------------------------------------------
+      // a[0] = 1;
+      // console.log(a); // [0]
 
-    // Object.asign()
-    // // 1.
-    // const target = {a: 10, b: 20}
-    // const source = {b: 50, c: 22}
+      // // 2.
+      // const obj = {
+      //     prop: 42
+      // };
 
-    // const returnedTarget = Object.assign(target, source);
+      // Object.freeze(obj);
 
-    // console.log(target); // {a: 10, b: 50, c: 22}
-    // console.log(source); // {b: 50, c: 22}
-    // console.log(returnedTarget); // {a: 10, b: 50, c: 22}
+      // obj.prop = 33;
+      // // Throws an error in strict mode
 
-    // // 2.
-    // let user = {
-    //     name: "hansraj",
-    //     age: 23
-    // }
+      // console.log(obj.prop);
+      // // Expected output: 42
 
-    // let person = Object.assign({}, user);
+      // // 3. - shallow freeze
+      // const employee = {
+      //     name: "Mayank",
+      //     designation: "Developer",
+      //     address: {
+      //         street: "Rohini",
+      //         city: "Delhi",
+      //     },
+      // };
 
-    // console.log(user);  // {name: 'hansraj', age: 23}
-    // console.log(person); // {name: 'hansraj', age: 23}
+      // Object.freeze(employee);
 
+      // employee.name = "Dummy"; // fails silently in non-strict mode
+      // employee.address.city = "Noida"; // attributes of child object can be modified
 
+      // console.log(employee.address.city); // "Noida"
+
+      // ---------------------------------------------------------------------------------------
+
+      // Object.asign()
+      // // 1.
+      // const target = {a: 10, b: 20}
+      // const source = {b: 50, c: 22}
+
+      // const returnedTarget = Object.assign(target, source);
+
+      // console.log(target); // {a: 10, b: 50, c: 22}
+      // console.log(source); // {b: 50, c: 22}
+      // console.log(returnedTarget); // {a: 10, b: 50, c: 22}
+
+      // // 2.
+      // let user = {
+      //     name: "hansraj",
+      //     age: 23
+      // }
+
+      // let person = Object.assign({}, user);
+
+      // console.log(user);  // {name: 'hansraj', age: 23}
+      // console.log(person); // {name: 'hansraj', age: 23}
+
+      // -------------------------------------- Pollyfill of Object.entries() ------------------------------------------------------------
+
+      // pollyfill of Object.entries();
+
+      //       const person = {
+      //         name: "Ram",
+      //         age: 30,
+      //       };
+
+      //       console.log(Object.entries(person)); // [["name", "Ram"], ["age", 30]]
+
+      //       const getObjectEntries = (obj) => {
+      //         const objKeys = Object.keys(obj);
+      //         console.log(objKeys);
+
+      //         return objKeys.map((key) => {
+      //           let value = obj[key];
+      //           return [key, value];
+      //         });
+      //       };
+      //       console.log(getObjectEntries(person));
     </script>
-</body>
+  </body>
 </html>
