@@ -53,7 +53,7 @@
 // context
 function Shipping(strategy) {
     this.strategy = strategy;
-} 
+}
 // getShippingProductCost ek interface hai
 Shipping.prototype.getShippingProductCost = function () {
     return this.strategy();
@@ -62,13 +62,13 @@ Shipping.prototype.getShippingProductCost = function () {
 // Group of strategies
 const viaTrain = function () {
     console.log(" it's cost 200$ via train ");
-} 
+}
 const viaBus = function () {
     console.log(" it's cost 100$ via Bus ");
 }
 const viaCab = function () {
     console.log(" it's cost 300$ via Cab ");
-} 
+}
 
 // runtime
 const arr2 = [];
@@ -79,11 +79,38 @@ arr2.push(shippedViaBus);
 const shippedViaCab = new Shipping(viaCab);
 arr2.push(shippedViaCab);
 
-arr2.forEach(function(Shipping) {
+arr2.forEach(function (Shipping) {
     Shipping.getShippingProductCost();
 })
 
-// output 
-// it's cost 200$ via train 
+// output
+// it's cost 200$ via train
 //  it's cost 100$ via Bus
 // it's cost 300$ via Cab
+
+// ----------------------------------------------------------------------------
+
+// chat gpt 
+// Defines a family of algorithms and makes them interchangeable.
+
+class Payment {
+    pay(strategy) {
+        strategy.pay();
+    }
+}
+
+class CreditCard {
+    pay() {
+        console.log('Paid with Credit Card');
+    }
+}
+
+class PayPal {
+    pay() {
+        console.log('Paid with PayPal');
+    }
+}
+
+const payment = new Payment();
+payment.pay(new CreditCard()); // Paid with Credit Card
+payment.pay(new PayPal()); // Paid with PayPal

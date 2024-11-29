@@ -6,7 +6,7 @@
 
 function CarPrototype(proto) {
     this.proto = proto;
-    this.clone = function(){
+    this.clone = function () {
         const car = new Car();
         car.wheels = proto.wheels;
         car.engines = proto.engines;
@@ -18,10 +18,10 @@ function CarPrototype(proto) {
 function Car(wheels, engines) {
     this.wheels = wheels;
     this.engines = engines;
-    this.start = function(){
+    this.start = function () {
         console.log("Car Started");
     }
-    this.break = function(){
+    this.break = function () {
         console.log("Car has stopped!");
     }
 }
@@ -29,7 +29,7 @@ function Car(wheels, engines) {
 // client
 function run() {
     // first car
-    const proto = new Car(4, 2); 
+    const proto = new Car(4, 2);
     console.log(proto);  // Car {wheels: 4, engines: 2, start: ƒ, break: ƒ}
     console.log(proto.wheels);  // 4
 
@@ -45,10 +45,53 @@ function run() {
 
     const car2 = prototype.clone();
     car2.start();  // car started
-    
+
     const car3 = prototype.clone();
     console.log(car3.wheels);  // 4
 }
 run();
 
-// yhi chij ham object.create() se karte 
+// yhi chij ham object.create() se karte
+
+// -------------------------------------------------------
+
+// Link - https://javascriptpatterns.vercel.app/patterns/design-patterns/prototype-pattern
+
+// using class 
+class Dog {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    bark() {
+        console.log(`${this.name} is barking!`);
+    }
+    wagTail() {
+        console.log(`${this.name} is wagging their tail!`);
+    }
+}
+
+const dog1 = new Dog("Max", 4);
+const dog2 = new Dog("Sam", 2);
+const dog3 = new Dog("Joy", 6);
+const dog4 = new Dog("Spot", 8);
+
+// ---------------------------------------------------
+
+// using function 
+const createDog = (name, age) => ({
+    name,
+    age,
+    bark() {
+        console.log(`${name} is barking!`);
+    },
+    wagTail() {
+        console.log(`${name} is wagging their tail!`);
+    },
+});
+
+const dog1 = createDog("Max", 4);
+const dog2 = createDog("Sam", 2);
+const dog3 = createDog("Joy", 6);
+const dog4 = createDog("Spot", 8);
